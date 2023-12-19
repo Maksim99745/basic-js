@@ -11,41 +11,39 @@ const { NotImplementedError } = require('../extensions/index.js');
  * getSeason(new Date(2020, 02, 31)) => 'spring'
  * 
  */
-function getSeason(/* date */) {
-
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
-
-  // if (!date) {
-  //   return 'Unable to determine the time of year!';
-  // }
-
-  // if(isNaN(date) || typeof date !== 'object') {
-  //   throw new Error("Invalid date!");
-  // }
-
-  // if (Object.keys(date).length === 1) {
-  //   throw new Error("Invalid date!");
-  // }
+function getSeason(date) {
   
-  // let time = (date).getMonth() + 1;
-  // const season = ['winter', 'spring', 'summer', 'autumn'];
-  // if (time < 3 || time === 12) {
-  //   return season[0];
-  // }
+  if (!date) {
+    return 'Unable to determine the time of year!';
+  }
 
-  // if (time < 6) {
-  //   return season[1];
-  // }
+   try {
+     let time = date.getUTCDay();
+   } catch (e) {
+    throw new Error("Invalid date!");
+    }
 
-  // if (time < 9) {
-  //   return season[2];
-  // }
+  if (Object.keys(date).length === 1) {
+    throw new Error("Invalid date!");
+  }
 
-  // if (time < 12) {
-  //   return season[3];
-  // }
+  let time = (date).getMonth() + 1;
+  const season = ['winter', 'spring', 'summer', 'autumn'];
+  if (time < 3 || time === 12) {
+    return season[0];
+  }
 
+  if (time < 6) {
+    return season[1];
+  }
+
+  if (time < 9) {
+    return season[2];
+  }
+
+  if (time < 12) {
+    return season[3];
+  }
 
 }
 
