@@ -22,9 +22,76 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function getDNSStats(domains) {
+  if (domains.length === 0) {
+    return {};
+  }
+
+  if (domains.length === 1) {
+    const arr = [];
+    for (let i = 0; i < domains.length; i += 1) {
+      arr.push(domains[i].split('.'));
+    }
+
+    const obj = {};
+    obj[String('.' + arr[0][arr.length])] = arr.length;
+
+    const arr2 = [];
+
+    for (let j = 0; j < arr.length; j += 1) {
+      let add = '';
+      for (let q = arr[j].length - 1; q >= 0; q -= 1) {
+        add += ('.' + arr[j][q]);
+      }
+      arr2.push(add);
+    }
+
+    for (let k = arr2.length - 1; k >= 0 ; k -= 1) {
+      let count = 0;
+      for (let item of arr2) {
+        let num = arr2[k].length;
+
+        if (arr2[k] === item || arr2[k] === item.slice(0, num)) {
+          count += 1;
+        }
+      }
+      obj[arr2[k]] = count;
+    }
+
+    return obj;
+  }
+
+  const arr = [];
+  for (let i = 0; i < domains.length; i += 1) {
+    arr.push(domains[i].split('.'));
+  }
+
+  const obj = {};
+  obj[String('.' + arr[0][arr.length - 1])] = arr.length;
+
+  const arr2 = [];
+
+  for (let j = 0; j < arr.length; j += 1) {
+    let add = '';
+    for (let q = arr[j].length - 1; q >= 0; q -= 1) {
+      add += ('.' + arr[j][q]);
+    }
+    arr2.push(add);
+  }
+
+  for (let k = 0; k < arr2.length; k += 1) {
+    let count = 0;
+    for (let item of arr2) {
+      let num = arr2[k].length;
+      
+      if (arr2[k] === item || arr2[k] === item.slice(0, num)) {
+        count += 1;
+      }
+    }
+    obj[arr2[k]] = count;
+  }
+
+  return obj;
 }
 
 module.exports = {
